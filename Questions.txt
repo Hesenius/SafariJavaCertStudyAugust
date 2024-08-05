@@ -152,3 +152,141 @@ B) Exception at runtime
 C) -1
 D) 0x00000005
 E) 5
+
+Q)
+Given:
+class X {
+  private static int count = 22;
+  public static boolean getValue() {
+    count++;
+    return true;
+  }
+  public static void main(String...args) {
+    boolean b1 = false;
+    if (!b1 & getValue()) {
+      System.out.println(count);
+    } else {
+      System.out.println("No " + count);
+    }
+  }
+}
+
+What is the result:
+A) Compilation fails
+B) No 22
+C) No 23
+D) 22
+E) 23
+
+Q) Which print "true"
+A) String s = "Hello";
+   String t = "He";
+   t += "llo";
+   sout(s == t);
+
+B) String s = "Hello";
+   String t = "He";
+   t += "llo";
+   sout(s.equals(t));
+
+C) StringBuilder s = new StringBuilder("Hello");
+   StringBuilder t = new StringBuilder("He");
+   t.append("llo");
+   sout(s.equals(t));
+
+D) List<String> ls = List.of("Fred", "Jim");
+   List<String> ls2 = new ArrayList<>(ls);
+   sout(ls.equals(ls2));
+
+E) LocalDate ld = LocalDate.of(2021, 3, 29);
+   LocalDate ld2 = LocalDate.of(2021, 3, 29);
+   sout(ld.equals(ld2));
+
+Q) Which print true?
+Iterable<String> is = List.of("a", "b", "c");
+Object obj = is;
+
+A) System.out.println(is instanceof List);
+B) System.out.println(obj instanceof List l && l.size() > 2);
+C) System.out.println(obj instanceof List<String> ls);
+D) System.out.println(is instanceof Collection<? extends CharSequence> cs);
+E) System.out.println(is instanceof List<String> ls || ls.size() > 2);
+
+Q) Given:
+  class Base {
+    void doBaseStuff() { System.out.println("doBaseStuff"); }
+  }
+
+  class Sub extends Base {
+    void doBaseStuff() { System.out.println("doSubStuff"); }
+
+    void length() { System.out.println("doLengthStuff"); }
+  }
+
+    Base b = new Sub();
+    ((StringBuilder) b) // line n1
+        .length();      // line n2
+
+   What is the result?
+   A) doLengthStuff
+   B) Exception at line n1
+   C) Exception at line n2
+   D) Compilation failure at line n1
+   E) Compilation failure at line n2
+
+ Q)  Given:
+   static
+   class Base {
+     void doBaseStuff() { System.out.println("doBaseStuff"); }
+   }
+
+   static
+   class Sub extends Base {
+     void doBaseStuff() { System.out.println("doSubStuff"); }
+     void doOtherStuff() { System.out.println("doOtherStuff"); }
+   }
+
+   public static void main(String[] args) {
+     Base b = new Sub();
+     ((Runnable) b).run();
+   }
+
+   What is the result?
+   A) doSubStuff
+   B) doOtherStuff
+   C) doBaseStuff
+   D) Exception at runtime
+   E) Compilation failure
+
+Q) Given:
+  static String doStuff(String s) {
+    s = new String("Hello");
+    return s;
+  }
+
+  public static void main(String[] args) {
+    String y = doStuff("Hello");
+    // line n1
+    System.out.println("y is " + y);
+  }
+ how many String objects are eligible for GC at line n1
+A) 0
+B) 1
+C) 2
+D) 3
+
+Q) Given
+  static int doStuff(String s) {
+    s = new String("Hello");
+    return s.length();
+  }
+
+  public static void main(String[] args) {
+    int y = doStuff("Hello");
+    // line n1
+  }
+ how many String objects are eligible for GC at line n1
+A) 0
+B) 1
+C) 2
+D) 3
