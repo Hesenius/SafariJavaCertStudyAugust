@@ -25,3 +25,69 @@ B) b = 130
 C) b = -126
 D) b = -128
 E) an exception is thrown
+
+Q) Given:
+class RCToy {
+  private static int count = 0;
+  private int age;
+
+  public RCToy() {
+    count++;
+  }
+
+  public RCToy(int age) {
+    this();
+    this.age = age;
+    System.out.println(this);
+  }
+
+  @Override
+  public String toString() {
+    return "RCToy for age " + age + ", count " + count;
+  }
+}
+
+// and:
+class Robot extends RCToy implements Serializable {
+  private int weaponCount;
+
+  public Robot(int weaponCount) {
+    super(weaponCount == 0 ? 3 : 10);
+    this.weaponCount = weaponCount;
+    System.out.println(this);
+  }
+
+  @Override
+  public String toString() {
+    return super.toString() + " a Robot with weaponcount = " + weaponCount;
+  }
+}
+
+// Given an attempt to create and serialize a Robot like this:
+    Robot r = new Robot(3);
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {
+      oos.writeObject(r);
+    } catch (IOException ioe) {
+      System.out.println("write failed");
+    }
+// What will be output by this code:
+    try (ObjectInputStream ois = new ObjectInputStream(
+        new ByteArrayInputStream(baos.toByteArray()))) {
+      Object obj = ois.readObject();
+      System.out.println(obj);
+    } catch (Exception ioe) {
+      System.out.println("read failed");
+    }
+
+A) RCToy for age 0, count 2 a Robot with weaponcount = 0
+   RCToy for age 0, count 2 a Robot with weaponcount = 3
+   RCToy for age 0, count 2 a Robot with weaponcount = 3
+B) RCToy for age 0, count 1 a Robot with weaponcount = 0
+   RCToy for age 0, count 1 a Robot with weaponcount = 3
+C) RCToy for age 0, count 1 a Robot with weaponcount = 3
+   RCToy for age 0, count 1 a Robot with weaponcount = 3
+D) RCToy for age 0, count 2 a Robot with weaponcount = 3
+E) Compilation fails
+F) An exception is thrown during serialization
+G) An exception is thrown during deserialization
