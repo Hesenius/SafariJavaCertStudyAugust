@@ -32,6 +32,7 @@ class RCToy {
   private int age;
 
   public RCToy() {
+    //super();
     count++;
   }
 
@@ -47,9 +48,10 @@ class RCToy {
   }
 }
 
-// and:
+and:
 class Robot extends RCToy implements Serializable {
   private int weaponCount;
+  // transient int extra;
 
   public Robot(int weaponCount) {
     super(weaponCount == 0 ? 3 : 10);
@@ -63,7 +65,7 @@ class Robot extends RCToy implements Serializable {
   }
 }
 
-// Given an attempt to create and serialize a Robot like this:
+Given an attempt to create and serialize a Robot like this:
     Robot r = new Robot(3);
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {
@@ -71,7 +73,8 @@ class Robot extends RCToy implements Serializable {
     } catch (IOException ioe) {
       System.out.println("write failed");
     }
-// What will be output by this code:
+
+What will be output by this code:
     try (ObjectInputStream ois = new ObjectInputStream(
         new ByteArrayInputStream(baos.toByteArray()))) {
       Object obj = ois.readObject();
@@ -91,3 +94,61 @@ D) RCToy for age 0, count 2 a Robot with weaponcount = 3
 E) Compilation fails
 F) An exception is thrown during serialization
 G) An exception is thrown during deserialization
+
+Q)Given:
+
+    String message = """Hello
+            Java 17 World!""";
+    System.out.println(message + "XXX");
+
+What is the result?
+A)
+Hello
+Java 17 World!XXX
+B)
+Hello
+    Java 17 World!XXX
+C)
+Hello
+Java 17 World!
+XXX
+D)
+    Hello
+        Java 17 World!
+XXX
+E) Compilation fails
+
+Q)Given:
+
+    String message = """
+        Hello
+            Java 17 World!""";
+    System.out.println(message + "XXX");
+
+What is the result?
+A)
+Hello
+Java 17 World!XXX
+B)
+Hello
+    Java 17 World!XXX
+C)
+Hello
+Java 17 World!
+XXX
+D)
+    Hello
+        Java 17 World!
+XXX
+E) Compilation fails
+
+Q) Given:
+    int x = -1;
+    System.out.println(x & 5);
+
+What is the result?
+A) Compilation fails
+B) Exception at runtime
+C) -1
+D) 0x00000005
+E) 5
