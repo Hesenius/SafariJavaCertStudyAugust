@@ -340,3 +340,131 @@ D) The code compiles if the word "yield" is inserted
    after the colon in both the case and default
 E) The code compiles if the changes of both C and D
    are applied
+
+Q) Given:
+interface GameDescriptor { String gameType(); }
+abstract class GD { public abstract String gameType(); }
+enum Suit {
+  HEARTS, DIAMONDS, CLUBS, SPADES;
+  // line n1
+  boolean isTrumps() { return this == HEARTS; }
+}
+
+Which is/are true?
+A) isTrumps is implicitly static
+B) compilation fails, but marking isTrumps static corrects the problem
+C) isTrumps can be marked final
+D) if it's necessary to prevent isTrumps being overridden,
+   it should be marked final
+E) this can be added at line n1:
+   private static Suit trumps = HEARTS;
+F) Suit can be modified to implement the GameDescriptor interface
+   if this code is added at line n1:
+   public String gameType() { return "Cards"; }
+G) Suit can be modified to extend the GD class if this code is
+   added at line n1:
+   public String gameType() { return "Cards"; }
+H) none of the above
+
+Q) Given:
+enum Day {
+  MONDAY(1), TUESDAY;
+// line n1
+}
+and:
+System.out.println(Day.MONDAY)
+
+Which is/are true?
+A) The code compiles as is
+B) If the following is added at line n1, the code compiles:
+   public Day(int d) {}
+C) If the following is added at line n1, the code compiles:
+   Day(int d) {}
+D) If the following is added at line n1, the code compiles:
+   Day(int d) {} Day() {}
+E) If the MONDAY(1), is changed to MONDAY, the code compiles:
+
+Q) Given
+  class Parent {
+    static int x = 97;
+  }
+  class Thing extends Parent {
+    int x = 99;
+
+    static void showIt() {
+      int x = 98;
+      System.out.println("x is " + Thing.x);
+    }
+  }
+
+What is the effect of:
+     Thing.showIt();
+
+  A) Compilation fails
+  B) Exception
+  C) x is 99
+  D) x is 98
+  E) x is 97
+
+Q) Given:
+  public static void funct(int x) {
+    x = x + 1;
+  }
+
+and:
+    int x = 99;
+    funct(x);
+    System.out.println(x);
+
+  What is the result?
+  A) 99
+  B) 100
+  C) An error
+
+Q)Given:
+  public static void q12A(StringBuilder x) {
+    x.append(" world");
+  }
+
+and:
+    StringBuilder x = new StringBuilder("Hello");
+    q12A(x);
+    System.out.println(x);
+
+  What is the result?
+  A) Hello
+  B) Hello world
+  C)  world
+  D) An error
+
+Q) Given:
+    public static void q14A(Integer x) {
+      x = x + 1;
+    }
+
+and:
+    public static void main(String[] args) {
+      Integer x = 99;
+      q14A(x);
+      System.out.println(x);
+    }
+
+    What is the result?
+    A) 99
+    B) 100
+    C) An error
+
+Q)
+  public static void q13A(int[] x) {
+    x[0] = x[0] + 1;
+  }
+
+and:
+    int x[] = {99};
+    q13A(x);
+    System.out.println(x[0]);
+
+  What is the result?
+  A) 99
+  B) 100
+  C) An error
