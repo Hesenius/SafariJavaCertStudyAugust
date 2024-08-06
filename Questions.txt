@@ -468,3 +468,106 @@ and:
   A) 99
   B) 100
   C) An error
+
+Q) Given:
+   var res = Stream.generate(() -> 1)
+       .limit(1000)
+       .parallel()
+       .collect(1, (a, b) -> a + b, (a, b) -> a + b);
+
+   System.out.println(res);
+
+What is the result
+A) 1000
+B) 1001
+C) unpredictable
+D) an exception is thrown
+E) compilation fails
+
+Q) Given:
+    record Customer(String name, int credit) {}
+and:
+    var result = Stream.of(new Customer("Fred", 100))
+        .collect(Collectors.groupingBy(c -> c.name(),
+            Collectors.counting()));
+
+What is the type of result?
+A) List<Customer>
+B) Map<Customer, Integer>
+C) Stream<Customer>
+D) Map<String, Integer>
+E) Map<String, Long>
+
+Q) Given
+class AC4 implements AutoCloseable {
+  @Override
+  public void close() throws Exception {
+    throw new SQLException();
+  }
+}
+And:
+public static void main(String[] args) throws Throwable {
+    try (
+        var one = new AC4();
+        var two = new AC4();
+        ){
+      throw new FileNotFoundException();
+    }
+  }
+
+Which are true?
+A) Compilation fails
+B) A FileNotFoundException is thrown to the caller
+C) An SQLException is thrown to the caller
+D) close methods of resources "one" and "two" are called
+E) close methods of resources "one" and "two" are not both called
+
+Q) Given
+    void doStuff() throws SQLException {};
+    void doStuff2() throws FileNotFoundException {};
+And:
+  void tryStuff() /*...insert here...*/ {
+    try {
+      doStuff();
+      doStuff2();
+    } catch (SQLException | FileNotFoundException e) {
+      throw e;
+    }
+  }
+
+What is best at "...insert here..."?
+A) throws Exception
+B) throws SQLException
+C) throws FileNotFoundException
+D) throws FileNotFoundException, SQLException
+E) nothing is needed, compilation succeeds as is
+
+Q) Given:
+  void doStuff(int x, int y) {}         // Method A
+  void doStuff(int x, long y) {}        // Method B
+  void doStuff(long x, int y) {}        // Method C
+  void doStuff(int ... x) {}            // Method D
+  void doStuff(Integer x, Integer y) {} // Method E
+And a call to:
+    doStuff(1, 2);
+
+What happens if method A is deleted?
+A) Method B is invoked
+B) Method C is invoked
+C) Method D is invoked
+D) Method E is invoked
+E) Compilation fails
+
+Q) Given
+  void doStuff(int ... x) {} // method A
+  void doStuff(Number x, Integer y) {} // method B
+  void doStuff(Integer x, Number y) {} // method C
+
+and a call:
+    doStuff(1, 2);
+
+What is the result?
+A) Method A is invoked
+B) Method B is invoked
+C) Method C is invoked
+D) Compilation fails
