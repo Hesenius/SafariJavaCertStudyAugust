@@ -15,7 +15,7 @@ class ClQ implements IntX, IntY {
     new ClQ().doTheStuff();
   }
 
-  void doStuff() {
+  public void doStuff() {
     IntX.super.doStuff();
   }
 
