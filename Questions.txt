@@ -756,3 +756,153 @@ final class Z implements X {}
 G) the code compiles if the following is added at line n1
 non-sealed abstract class Z implements X permits Q {}
 final class Q extends Z {}
+
+Q) Given
+record SalesItem(String description, int price) {
+  // line n1
+
+Which can be added individually at line n1?
+A) private int stockOnHand;
+B) @Override public int price() { return price; }
+C) @Override public int price() { return super.price() + 10; }
+D) static String ourStore;
+E) public int getDiscount() { return price / 10; }
+
+Q) Given:
+record Customer(String name, int id) {
+  // line n1
+}
+Which are valid at line n1?
+A)  Customer(String name, int id) {
+      this.name = "Mx. " + name;
+    }
+
+B)  Customer {
+      this.name = name;
+      this.id = id;
+    }
+
+C)  Customer {
+      if (name == null || name.length() == 0 || id < 1)
+        throw new IllegalArgumentException("Bad Customer values");
+      name = "Mr/Mrs/Ms " + name;
+    }
+
+D)  static {}
+
+E)  {}
+
+Q) Given:
+  class Base {
+    void doBaseStuff() {
+      System.out.println("doBaseStuff");
+    }
+  }
+
+  class Sub extends Base {
+    void doBaseStuff() {
+      System.out.println("doSubStuff");
+    }
+    void doOtherStuff() {
+      System.out.println("doOtherStuff");
+    }
+  }
+
+  In the Base and Sub classes, which are true in isolation?
+  A) doBaseStuff in Base can be marked public without causing errors
+  B) doBaseStuff in Base can be marked private without causing errors
+  C) doBaseStuff in Sub can be marked public without causing errors
+  D) doBaseStuff in Sub can be marked protected without causing errors
+  E) doBaseStuff in Sub can be marked private without causing errors
+
+Q) Given:
+  class Base {
+    void doBaseStuff() { System.out.println("doBaseStuff"); }
+  }
+
+  class Sub extends Base {
+    void doBaseStuff() { System.out.println("doSubStuff"); }
+  }
+
+In the Base and Sub classes, which are true in isolation?
+
+A) doBaseStuff in Base can be marked throws Exception without causing errors
+B) doBaseStuff in Base can be marked throws RuntimeException without causing errors
+C) doBaseStuff in Sub can be marked throws Exception without causing errors
+D) doBaseStuff in Sub can be marked throws RuntimeException without causing errors
+E) if doBaseStuff in Base were marked throws Exception,
+   then doBaseStuff in Sub can be marked throws IOException without causing errors
+
+Q) Given:
+
+class X {
+  public int getValue() { return 1; }
+  public CharSequence get() { return "x"; }
+}
+
+class Y extends X {
+  // line n1
+}
+
+Which of these methods may individually be added at line n1?
+
+A) public long getValue() { return 10; }
+B) public String getValue() {return "Hello";}
+C) public String getValue(int x) {return "Hello";}
+D) public short getValue() { return 10; }
+
+E) public long get() { return 1;}
+F) public String get() { return "X"; }
+G) public Object get() { return new Object(); }
+H) public CharSequence get() { return new StringBuilder("x"); }
+
+Q)   What does a module-info identify in an exports directive?
+  A) classes
+  B) interfaces
+  C) a service
+  D) a package
+  E) methods
+
+Q) Given
+  public void doStuff() {
+    int len = 3;
+    Predicate<String> ps = new Predicate<String>() {
+      @Override
+      public boolean test(String s) {
+        return s.length() > len; // line n1
+      }
+    };
+    // line n2
+  }
+
+  Which are true?
+  A) The code compiles
+  B) Compilation fails due to a problem at line n1
+  C) adding the code
+     System.out.println("testing lines " + (++len));
+  at line n2 is OK
+
+Q) Given
+class P1 {
+  public static class A1 {
+    private String getMsg() {
+      return "Message from A1";
+    }
+  }
+  public static class A2 extends A1 {
+    public String getMsg() { // line n1
+      return "Message from A2";
+    }
+  }
+  public static void main(String[] args) {
+    P1.A1 a2 = new P1.A2(); // line n2
+    System.out.println(a2.getMsg()); // line n3
+  }
+}
+
+What is the result?
+A) Compilation fails at line n1
+B) Compilation fails at line n2
+C) Compilation fails at line n3
+D) Message from A1
+E) Message from A2
